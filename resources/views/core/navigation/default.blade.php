@@ -32,7 +32,19 @@
 		<div class="userinfo">
 			<div class="user">
 				<ul>
-					<li><a href="#"><img src="{{ asset('images/user-pic.png') }}" title="user-name" /><span>Admin</span></a></li>
+					@guest
+						<li><a href="{{ route('login') }}"><img src="{{ asset('images/cicak.jpg') }}" title="user-name" /><span>Login</span></a></li>
+					@else
+						@if (Auth::user()->level == '0')
+							<li><a href="{{ route('admin.index') }}"><img src="{{ asset('images/user-pic.png') }}" title="user-name" /><span>Admin</span></a></li>
+						@else
+							<li><a id="logout-btn" href="javascript:void()"><img src="{{ asset('images/cicak.jpg') }}" title="user-name" /><span>Logout</span></a></li>
+
+							<form id="logout-form" method="post" action="{{ route('logout') }}" style="display: none;">
+								{{ csrf_field() }}
+							</form>
+						@endif
+					@endguest
 				</ul>
 			</div>
 		</div>
@@ -40,3 +52,11 @@
 		<div class="clear"> </div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$('#logout-btn').click(function(){
+			$('#logout-form').submit();
+		})
+	})
+</script>

@@ -39,6 +39,12 @@
 					</li>
 				@endif
 			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="#"><i class="fa fa-sign-out"></i> Logout</a>
+				</li>
+			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>

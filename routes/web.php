@@ -12,13 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('site');
 });
 
-Route::get('admin', 'AdminController@index')->name('admin.index');
-Route::get('admin/article', 'AdminController@article')->name('admin.article');
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function()
+{
+	Route::get('/', 'AdminController@index')->name('admin.index');
+	Route::get('article', 'AdminController@article')->name('admin.article');
+});
 
 Route::resource('article', 'ArticleController');
 
 Route::get('site', 'SiteController@index')->name('site.index');
 Route::get('site/about', 'SiteController@about')->name('site.about');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
